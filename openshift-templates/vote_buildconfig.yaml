@@ -3,6 +3,12 @@ apiVersion: template.openshift.io/v1
 metadata:
   name: ${APPLICATION_NAME}
 objects:
+  - kind: ImageStream
+    apiVersion: image.openshift.io/v1
+    metadata:
+      annotations:
+        description: Stream of application images
+      name: ${APPLICATION_NAME}
   - kind: BuildConfig
     apiVersion: v1
     metadata:
@@ -10,8 +16,6 @@ objects:
       annotations:
         description: Defines how to build the application from git
         template.alpha.openshift.io/wait-for-ready: "true"
-      labels:
-        template: ${APPLICATION_NAME}
     spec:
       source:
         type: Git
@@ -43,7 +47,7 @@ parameters:
   - name: APPLICATION_NAME
     displayName: Application Name
     description: The name of the application - used for resource names and labels
-    value: openshift-simple-app
+    value: vote-app
     required: true
   - name: SOURCE_REPOSITORY_URL
     displayName: Source Repository URL
