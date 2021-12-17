@@ -12,10 +12,10 @@ WORKDIR /app
 
 # Install our requirements.txt
 COPY requirements.txt /app/requirements.txt
-RUN pip install -r requirements.txt
+RUN pip install -r /app/requirements.txt
 
 # Copy our code from the current folder to /app inside the container
-COPY . .
+COPY . /app
 
 # Make port 8080 available for links and/or publish
 EXPOSE 8080

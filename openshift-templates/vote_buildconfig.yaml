@@ -9,6 +9,8 @@ objects:
       annotations:
         description: Stream of application images
       name: ${APPLICATION_NAME}
+      labels:
+        template: ${APPLICATION_NAME}
   - kind: BuildConfig
     apiVersion: v1
     metadata:
@@ -16,6 +18,8 @@ objects:
       annotations:
         description: Defines how to build the application from git
         template.alpha.openshift.io/wait-for-ready: "true"
+      labels:
+        template: ${APPLICATION_NAME}
     spec:
       source:
         type: Git
