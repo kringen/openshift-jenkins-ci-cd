@@ -1,0 +1,23 @@
+node {
+  stage('Build Tasks') {
+      openshift.withCluster() {
+          openshift.withProject("sandbox") {
+              openshift.selector("bc", "vote-app").startBuild("--wait=true")
+      }
+    }
+  }
+  stage('Tag Image') {
+      openshift.withCluster() {
+          openshift.withProject("sandbox") {
+              openshift.tag("vote-app:latest", "openshift-tasks:${BUILD_NUMBER}")
+      }
+    }
+  }
+  stage('Deploy App') {
+      openshift.withCluster() {
+          openshift.withProject("sandbox") {
+              openshift.selector("dc", "vote-app").rollout().latest()
+          }
+      }
+  }
+}
